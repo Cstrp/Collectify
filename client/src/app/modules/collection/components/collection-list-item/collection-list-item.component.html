@@ -1,0 +1,24 @@
+<div class="max-w-[300px] w-full p-5 bg-white/5 backdrop-blur rounded-md">
+  <div
+    [routerLink]="['/collection', collection.id]"
+    class="flex flex-col items-start justify-center gap-2"
+  >
+    <span class="w-full text-2xl">{{ capitalizeTitle() }}</span>
+    <span class="font-mono">{{ collection.theme }}</span>
+
+    <img class="max-w-sm rounded-lg" [src]="collection.image" alt="image" />
+    <span class="mb-2 text-sm font-mono max-w-[250px] break-words">
+      {{ collection.description }}
+    </span>
+
+    <div *ngIf="collection.fields">
+      <div
+        *ngFor="let field of collection.fields"
+        class="flex flex-row gap-2 font-thin"
+      >
+        <span>{{ field.type }}:</span>
+        <span>{{ field.value }}</span>
+      </div>
+    </div>
+  </div>
+</div>

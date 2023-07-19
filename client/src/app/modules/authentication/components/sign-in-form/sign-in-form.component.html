@@ -1,0 +1,107 @@
+<div
+  class="mx-auto 2xl:w-2/3 w-full px-10 py-5 flex flex-col items-center gap-10 text-sky-50 bg-white/5 backdrop-blur rounded shadow-2xl shadow-white/5"
+>
+  <div class="flex flex-col text-center gap-5">
+    <span class="text-2xl font-bold">Login</span>
+    <span class="text-base font-mono">Welcome back.</span>
+
+    <div class="flex flex-wrap items-center justify-center gap-5">
+      <button
+        (click)="loginWithGithub()"
+        mat-ripple
+        type="button"
+        class="items-center gap-2 text-white bg-[#24292F] hover:bg-[#24292F]/90 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 mr-2 mb-2"
+      >
+        <ng-icon name="bootstrapGithub" size="24" />
+        Sign in with Github
+      </button>
+
+      <button
+        (click)="loginWithGoogle()"
+        mat-ripple
+        type="button"
+        class="items-center gap-2 text-white bg-[#4285F4] hover:bg-[#4285F4]/90 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex dark:focus:ring-[#4285F4]/55 mr-2 mb-2"
+      >
+        <ng-icon name="bootstrapGoogle" size="20" />
+        Sign in with Google
+      </button>
+    </div>
+    <span class="text-base font-mono">OR</span>
+  </div>
+  <form
+    (ngSubmit)="onSubmit()"
+    [formGroup]="signInForm"
+    (keydown.enter)="onSubmit()"
+    class="w-full flex flex-col gap-10"
+    tabindex="0"
+  >
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input formControlName="email" matInput type="email" />
+      <mat-error
+        *ngIf="f['email'].touched && f['email'].invalid"
+        class="text-red-500"
+      >
+        <div *ngIf="f['email'].errors?.['required']">
+          Please enter a valid email address.
+        </div>
+        <div *ngIf="f['email'].errors?.['email']">
+          Please enter a valid email address.
+        </div>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password (min. 6 char)</mat-label>
+      <input
+        formControlName="password"
+        matInput
+        [type]="!show ? 'password' : 'text'"
+      />
+      <mat-error
+        *ngIf="f['password'].touched && f['password'].invalid"
+        class="text-red-500"
+      >
+        <div *ngIf="f['password'].errors?.['required']">
+          Password is required
+        </div>
+        <div *ngIf="f['password'].errors?.['minlength']">
+          Password must be at least 3 characters
+        </div>
+        <div *ngIf="f['password'].errors?.['maxlength']">
+          Password must not exceed 16 characters
+        </div>
+      </mat-error>
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="show = !show"
+        style="color: black"
+      >
+        <mat-icon>{{ !show ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <button
+      mat-ripple
+      type="submit"
+      [disabled]="signInForm.invalid || signInForm.disabled"
+      class="2xl:w-1/2 bg-white/20 w-full text-base p-2 rounded disabled:bg-white/10 transition ease-out hover:bg-[#24292F] hover:backdrop-blur-md"
+    >
+      Login
+    </button>
+  </form>
+
+  <div
+    class="w-full flex flex-col md:flex-row justify-center items-center gap-3 py-7 px-2 border border-stone-600 rounded"
+  >
+    <span class="text-base font-bold"> Don’t have an account? </span>
+    <button
+      class="font-thin opacity-75 transition-opacity ease-in hover:opacity-100"
+      mat-button
+      routerLink="/sign-up"
+      style="color: white"
+    >
+      Join Collectify!
+    </button>
+  </div>
+</div>

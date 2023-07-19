@@ -1,0 +1,26 @@
+{
+  "name": "collectify",
+  "version": "0.1.0",
+  "private": true,
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "npm run start:dev --prefix server",
+    "server-install": "pnpm install --prefix server",
+    "client": "npm start --prefix client",
+    "client-install": "pnpm install --prefix client",
+    "start": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "keywords": [
+    "collectify",
+    "collections",
+    "collect"
+  ],
+  "author": "Valery Nosareu",
+  "email": "valery.nosareu@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "prettier": "^2.8.8"
+  }
+}

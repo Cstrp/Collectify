@@ -1,0 +1,30 @@
+<button mat-icon-button [matMenuTriggerFor]="menu">
+  <mat-icon>account_circle </mat-icon>
+</button>
+
+<mat-menu
+  #menu="matMenu"
+  class="w-full max-w-[300px] bg-white/10 backdrop-blur text-white p-4"
+>
+  <ng-template matMenuContent>
+    <div class="flex items-center gap-3 p-4">
+      <span>{{ getGreeting() }}</span>
+      <div *ngIf="user.avatar; else noAvatar">
+        <img
+          [src]="user.avatar"
+          alt="avatar"
+          class="max-w-[40px] rounded-full"
+        />
+      </div>
+    </div>
+    <div class="w-full px-2">
+      <button mat-button (click)="logout()" style="color: aliceblue">
+        Logout <mat-icon>logout</mat-icon>
+      </button>
+    </div>
+  </ng-template>
+</mat-menu>
+
+<ng-template #noAvatar>
+  <mat-icon>person</mat-icon>
+</ng-template>

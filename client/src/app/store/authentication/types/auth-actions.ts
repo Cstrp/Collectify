@@ -1,0 +1,16 @@
+export const enum AUTH_ACTIONS {
+  SIGN_IN_START = '[Authentication] SignIn Start',
+  SIGN_IN_SUCCESS = '[Authentication] SignIn Success',
+  SIGN_IN_FAILED = '[Authentication] SignIn Failed',
+  SIGN_UP_START = '[Authentication] SignUp Start',
+  SIGN_UP_SUCCESS = '[Authentication] SignUp Success',
+  SIGN_UP_FAILED = '[Authentication] SignUp Failed',
+  SET_TOKEN_START = '[Authentication] Set Token Start',
+  SET_TOKEN_SUCCESS = '[Authentication] Set Token Success',
+  SET_TOKEN_FAILED = '[Authentication] Set Token Failed',
+  LOG_OUT = '[Authentication] Logout',
+  LOG_OUT_SUCCESS = '[Authentication] Logout Success',
+  GET_PROFILE = '[Authentication] Get Profile',
+  GET_PROFILE_SUCCESS = '[Authentication] Get Profile Success',
+  GET_PROFILE_FAILED = '[Authentication] Get Profile Failed',
+}

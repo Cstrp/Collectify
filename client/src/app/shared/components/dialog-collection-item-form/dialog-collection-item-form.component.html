@@ -1,0 +1,99 @@
+<div class="custom-dialog flex flex-col">
+  <div mat-dialog-content class="flex flex-row justify-center">
+    <ng-form [formGroup]="modalForm" class="flex flex-col gap-5">
+      <mat-form-field appearance="fill" class="w-full">
+        <input
+          matInput
+          type="text"
+          formControlName="title"
+          placeholder="title"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="w-full">
+        <textarea
+          matInput
+          type="text"
+          formControlName="description"
+          placeholder="description"
+        ></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-chip-grid #chips>
+          <mat-chip-row
+            *ngFor="let tag of modalForm.get('tags')?.value"
+            [removable]="true"
+            (removed)="removeTag(tag)"
+          >
+            {{ tag }}
+            <button matChipRemove (click)="removeTag(tag)" style="color: black">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-row>
+        </mat-chip-grid>
+
+        <input
+          [matChipInputFor]="chips"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          (matChipInputTokenEnd)="addTag($event)"
+          type="text"
+        />
+      </mat-form-field>
+
+      <div formArrayName="fields">
+        <div *ngFor="let fg of fieldsGroup.controls; let i = index">
+          <div [formGroupName]="i">
+            <mat-form-field appearance="fill" class="w-full">
+              <input
+                matInput
+                formControlName="type"
+                placeholder='type (for example "author")'
+              />
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="w-full">
+              <input
+                matInput
+                formControlName="value"
+                placeholder='value (for example "John Doe")'
+              />
+            </mat-form-field>
+
+            <div class="flex gap-5">
+              <button mat-icon-button (click)="removeFields(i)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <button mat-icon-button (click)="addFields()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+      <mat-dialog-actions align="end">
+        <div class="w-full flex items-end justify-end gap-7">
+          <button
+            (click)="onClose()"
+            class="w-full bg-blue-200/40 rounded max-w-[200px] px-2 py-4"
+          >
+            <span class="font-bold">Cancel</span>
+          </button>
+
+          <button
+            (click)="onSubmit()"
+            [disabled]="modalForm.invalid"
+            class="w-full max-w-[200px] bg-blue-200/40 disabled:bg-black/50 px-2 py-4 rounded"
+          >
+            <span class="font-bold">{{ data.id ? 'Update' : 'Create' }}</span>
+          </button>
+        </div>
+      </mat-dialog-actions>
+    </ng-form>
+  </div>
+</div>
+
+<div
+  class="dialog-backdrop fixed top-0 left-0 w-full h-full backdrop-blur-sm -z-10"
+></div>

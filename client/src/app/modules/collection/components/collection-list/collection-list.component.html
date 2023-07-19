@@ -1,0 +1,5 @@
+<div class="flex items-start justify-center flex-wrap gap-2">
+  <div *ngFor="let collection of collections$ | async">
+    <app-collection-list-item [collection]="collection" />
+  </div>
+</div>

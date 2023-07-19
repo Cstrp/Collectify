@@ -1,0 +1,102 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String  @id @unique @default(uuid())
+  username String?
+  email    String
+  password String
+  avatar   String?
+  role     Role?   @default(USER)
+
+  collections Collection[]
+  comments    Comments[]
+  likes       Likes[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Collection {
+  id          String  @id @default(uuid())
+  title       String
+  description String
+  theme       String?
+  image       String?
+
+  fields Json[]
+  items  CollectionItem[]
+
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("collection")
+}
+
+model CollectionItem {
+  id          String  @id @default(uuid())
+  title       String
+  description String?
+
+  fields Json[]
+
+  collection   Collection? @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  collectionId String
+
+  tags     String[]
+  comments Comments[]
+  likes    Likes[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("collection_item")
+}
+
+model Comments {
+  id      String @id @default(uuid())
+  content String
+
+  userId String?
+  User   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  collectionItemId String?
+  CollectionItem   CollectionItem? @relation(fields: [collectionItemId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("comments")
+}
+
+model Likes {
+  id String @id @default(uuid())
+
+  User   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId String?
+
+  collectionItemId String?
+  CollectionItem   CollectionItem? @relation(fields: [collectionItemId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("likes")
+}
+
+enum Role {
+  USER
+  ADMIN
+}

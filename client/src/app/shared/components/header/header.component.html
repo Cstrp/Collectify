@@ -1,0 +1,33 @@
+<header class="py-2 px-4 w-full">
+  <div class="w-full flex items-center justify-between">
+    <div class="flex items-center">
+      <div class="w-full max-w-[130px] cursor-pointer" routerLink="/">
+        <img alt="logo" src="assets/img/logo_white_large.png" />
+      </div>
+    </div>
+
+    <div
+      class="w-1/2 2xl:block lg:block hidden transition ease-in border-b border-teal-500 py-2 hover:border-b-pink-200"
+    >
+      <input
+        class="bg-transparent border-none w-full text-white mr-3 py-1 px-2 leading-tight focus:outline-none"
+        placeholder="Search"
+      />
+    </div>
+
+    <div class="flex flex-row items-center w-full max-w-[120px]">
+      <div *ngIf="isAuthenticated | async">
+        <app-menu />
+      </div>
+
+      <button
+        mat-button
+        matTooltip="Log in"
+        style="color: aliceblue"
+        routerLink="/sign-in"
+      >
+        Log In
+      </button>
+    </div>
+  </div>
+</header>

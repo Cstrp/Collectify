@@ -1,0 +1,109 @@
+<div *ngIf="!currLoc">
+  <div *ngIf="collection" class="shadow-2xl shadow-white/5">
+    <mat-card
+      class="backdrop-blur p-4 rounded-lg"
+      appearance="outlined"
+      style="background-color: rgb(0 0 0 / 0.05)"
+    >
+      <div
+        class="w-full flex 2xl:flex-row flex-col justify-center items-center gap-5"
+      >
+        <div class="w-1/2 flex justify-end">
+          <img
+            [src]="collection.image"
+            alt="img"
+            class="h-auto max-w-lg rounded-lg object-contain md:object-scale-down"
+          />
+        </div>
+        <div class="w-1/2 flex flex-col items-center text-center">
+          <span class="mb-3 text-3xl font-bold leading-tight">
+            {{ capitalize(collection.title) }}
+          </span>
+          <span class="mb-2 text-2xl font-mono max-w-sm break-words">
+            {{ capitalize(collection.description) }}
+          </span>
+        </div>
+      </div>
+
+      <mat-card-content class="mt-5">
+        <div class="flex flex-col gap-3">
+          <div class="flex flex-col gap-2">
+            <span class="text-base font-semibold">Additional fields:</span>
+            <div
+              *ngIf="
+                collection.fields && collection.fields.length > 0;
+                else noItems && noFieldsAndItems
+              "
+            >
+              <div *ngFor="let field of collection.fields">
+                <span>{{ field.type }}: {{ field.value }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <span class="text-base font-semibold">Items:</span>
+            <div
+              *ngIf="
+                collection.items && collection.items.length > 0;
+                else noItems && noFieldsAndItems
+              "
+            >
+              <div class="flex flex-col items-start gap-2">
+                <span class="font-medium">
+                  You have {{ collection.items.length }} item(s)
+                </span>
+
+                <button routerLink="items">See more...</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button
+          mat-icon-button
+          matTooltip="add new item to collection"
+          (click)="openItemDialog()"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          (click)="openCollectionDialog()"
+          matTooltip="edit current collection"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          (click)="deleteCollection()"
+          matTooltip="remove collection"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+
+<ng-template #noFields>
+  <div *ngIf="collection.items && collection.items.length > 0; else noItems">
+    <span class="text-gray-500">No additional fields available.</span>
+  </div>
+</ng-template>
+
+<ng-template #noItems>
+  <div *ngIf="collection.fields && collection.fields.length > 0; else noFields">
+    <span class="text-gray-500">No items available.</span>
+  </div>
+</ng-template>
+
+<ng-template #noFieldsAndItems>
+  <span class="text-gray-500">
+    No additional information available. Add additional fields or create
+    collection items.
+  </span>
+</ng-template>
+
+<router-outlet />

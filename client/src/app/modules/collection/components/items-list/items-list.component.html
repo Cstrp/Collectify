@@ -1,0 +1,38 @@
+<table
+  mat-table
+  [dataSource]="ds"
+  matSort
+  class="w-full bg-white/35 backdrop-blur shadow-lg shadow-red-200"
+>
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>No .</th>
+    <td mat-cell *matCellDef="let el">{{ el._id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
+    <td mat-cell *matCellDef="let el">{{ el.title }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+    <td mat-cell *matCellDef="let el">{{ el.description }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="createdAt">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Created at</th>
+    <td mat-cell *matCellDef="let el">
+      {{ el.createdAt | date : 'dd-MM-yyyy HH:mm' }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="updatedAt">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Updated at</th>
+    <td mat-cell *matCellDef="let el">
+      {{ el.updatedAt | date : 'dd-MM-yyyy HH:mm' }}
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
